@@ -20,8 +20,8 @@ Some people were having trouble performing calculations with a series of columns
 # Outline
 1. Calculating the row sum of a series of columns.
 2. Calculating the row mean of a series of columns.
-3. Using the `apply()` function
-4. When columns are not in a sequential order
+3. Using the `apply()` function.
+4. When columns are not in a sequential order and using the `tidy` method.
 
 For this demonstration, we will be looking at the mtcars data set (only the first 8 rows) which is already available to you.
 
@@ -214,7 +214,7 @@ kbl(cars) %>%
   scroll_box(width = "100%", height = "100%")
 ```
 
-# Unordered Columns
+# Non-sequential Columns
 Sometimes the variables are not in a sequential order like our example. <br>
 Take a look at the dataframe below.
 
@@ -241,7 +241,7 @@ The score, question, and score_C variables are separated by each other. <br>
 Using the previous methods is not advisable. <br>
 <br>
 
-## Tidy Method
+## The `tidy` Method
 I recommend using the tidy method where we will use pipes and dplyr functions.
 
 ```{r}
@@ -280,8 +280,6 @@ mixData <- mixData %>%
          score_CMean = rowMeans(select(., starts_with("score") & ends_with("_C"))))
 ```
 
-Note: The first 6 columns were omitted for ease of viewing.
-
 ```{r, echo=F}
 kbl(mixData) %>%
   kable_styling(full_width = T) %>%
@@ -292,7 +290,9 @@ kbl(mixData) %>%
 # Conclusion
 For calculating the sums and means of a series of column for each row, I recommend using the `rowSums()` and `rowMeans()` functions since they were specifically designed to do these calculations. <br> 
 
-For other calculations, you can use the `apply()` function with the "MARGIN = 1" argument and by specifying the appropriate function to do the calculation.
+For other calculations, you can use the `apply()` function with the `MARGIN = 1` argument and by specifying the appropriate function for the calculation.
+
+If the columns of interest are not in a sequential order, the `tidy` method is probably your best option. Once you become comfortable with the `tidy` syntax, you might prefer it regardless of column order.
 
 ## Alternative
 The R package: matrixStats exists and it provides more functions like the `rowSums()` function. <br>

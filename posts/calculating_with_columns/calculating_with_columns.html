@@ -261,8 +261,8 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li>Calculating the row sum of a series of columns.</li>
 <li>Calculating the row mean of a series of columns.</li>
-<li>Using the <code>apply()</code> function</li>
-<li>When columns are not in a sequential order</li>
+<li>Using the <code>apply()</code> function.</li>
+<li>When columns are not in a sequential order and using the <code>tidy</code> method.</li>
 </ol>
 <p>For this demonstration, we will be looking at the mtcars data set (only the first 8 rows) which is already available to you.</p>
 <pre class="r"><code>cars &lt;- head(mtcars, 8)</code></pre>
@@ -2906,8 +2906,8 @@ Merc 240D
 </div>
 </div>
 </div>
-<div id="unordered-columns" class="section level1">
-<h1>Unordered Columns</h1>
+<div id="non-sequential-columns" class="section level1">
+<h1>Non-sequential Columns</h1>
 <p>Sometimes the variables are not in a sequential order like our example. <br> Take a look at the dataframe below.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -2945,19 +2945,16 @@ score03_C
 <tbody>
 <tr>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-2
+1
+</td>
+<td style="text-align:right;">
+1
 </td>
 <td style="text-align:right;">
 4
@@ -2969,111 +2966,27 @@ score03_C
 5
 </td>
 <td style="text-align:right;">
-2
+3
+</td>
+<td style="text-align:right;">
+3
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
+5
 </td>
 <td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
 1
 </td>
-</tr>
-<tr>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
 4
@@ -3090,10 +3003,100 @@ score03_C
 </tr>
 <tr>
 <td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
 2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
 </td>
 <td style="text-align:right;">
 4
@@ -3105,16 +3108,13 @@ score03_C
 1
 </td>
 <td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
 3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
 </td>
 </tr>
 <tr>
@@ -3122,45 +3122,7 @@ score03_C
 5
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
 2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-3
 </td>
 <td style="text-align:right;">
 1
@@ -3169,18 +3131,56 @@ score03_C
 5
 </td>
 <td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
 3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>The score, question, and score_C variables are separated by each other. <br> Using the previous methods is not advisable. <br> <br></p>
-<div id="tidy-method" class="section level2">
-<h2>Tidy Method</h2>
+<div id="the-tidy-method" class="section level2">
+<h2>The <code>tidy</code> Method</h2>
 <p>I recommend using the tidy method where we will use pipes and dplyr functions.</p>
 <pre class="r"><code># Calculating row sums of the numbered score variables
 mixData$scoreSum &lt;- mixData %&gt;%
@@ -3235,39 +3235,13 @@ scoreSum
 <tbody>
 <tr>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-12
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
+1
 </td>
 <td style="text-align:right;">
 1
@@ -3279,19 +3253,45 @@ scoreSum
 4
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
 5
-</td>
-<td style="text-align:right;">
-2
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-2
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
 20
@@ -3299,7 +3299,16 @@ scoreSum
 </tr>
 <tr>
 <td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
 4
@@ -3308,39 +3317,30 @@ scoreSum
 5
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-1
+4
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
-8
+14
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
+2
 </td>
 <td style="text-align:right;">
 3
+</td>
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
 3
@@ -3352,10 +3352,10 @@ scoreSum
 3
 </td>
 <td style="text-align:right;">
-4
+5
 </td>
 <td style="text-align:right;">
-1
+4
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
 18
@@ -3369,92 +3369,28 @@ scoreSum
 2
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-2
+3
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-14
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
 3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
 </td>
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-26
+8
 </td>
 </tr>
 <tr>
@@ -3462,16 +3398,16 @@ scoreSum
 4
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
 3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
 </td>
 <td style="text-align:right;">
 1
@@ -3487,6 +3423,70 @@ scoreSum
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
 26
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+16
 </td>
 </tr>
 </tbody>
@@ -3501,7 +3501,6 @@ scoreSum
          questionMedian = apply(select(., starts_with(&quot;question&quot;)),
                                 MARGIN = 1, median, na.rm = T),
          score_CMean = rowMeans(select(., starts_with(&quot;score&quot;) &amp; ends_with(&quot;_C&quot;))))</code></pre>
-<p>Note: The first 6 columns were omitted for ease of viewing.</p>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -3547,45 +3546,13 @@ score_CMean
 <tbody>
 <tr>
 <td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-18
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-5
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-3.666667
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
+1
 </td>
 <td style="text-align:right;">
 1
@@ -3597,19 +3564,51 @@ score_CMean
 4
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
 5
-</td>
-<td style="text-align:right;">
-2
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;">
-2
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+33
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2.666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
 30
@@ -3618,12 +3617,21 @@ score_CMean
 3
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
-3.666667
+4.000000
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+2
 </td>
 <td style="text-align:right;">
 4
@@ -3632,95 +3640,10 @@ score_CMean
 5
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
 1
 </td>
 <td style="text-align:right;">
 2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-12
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-4
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-2.333333
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-27
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-3
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-3.000000
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
 </td>
 <td style="text-align:right;">
 4
@@ -3737,22 +3660,10 @@ score_CMean
 </tr>
 <tr>
 <td style="text-align:right;">
-3
+4
 </td>
 <td style="text-align:right;">
 2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-4
 </td>
 <td style="text-align:right;">
 3
@@ -3761,24 +3672,7 @@ score_CMean
 2
 </td>
 <td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-30
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-2
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-3.333333
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
+3
 </td>
 <td style="text-align:right;">
 5
@@ -3787,25 +3681,16 @@ score_CMean
 3
 </td>
 <td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
 5
 </td>
 <td style="text-align:right;">
 4
 </td>
-<td style="text-align:right;">
-5
+<td style="text-align:right;background-color: #f5ff51 !important;">
+27
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
-39
-</td>
-<td style="text-align:right;background-color: #f5ff51 !important;">
-4
+3
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
 4.000000
@@ -3813,19 +3698,57 @@ score_CMean
 </tr>
 <tr>
 <td style="text-align:right;">
-4
+1
 </td>
 <td style="text-align:right;">
 2
 </td>
 <td style="text-align:right;">
-4
+3
 </td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+12
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.000000
+</td>
+</tr>
+<tr>
 <td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
 3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
 </td>
 <td style="text-align:right;">
 1
@@ -3843,10 +3766,86 @@ score_CMean
 39
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
 3
 </td>
 <td style="text-align:right;background-color: #f5ff51 !important;">
-2.666667
+33
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+1.666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+24
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.333333
 </td>
 </tr>
 </tbody>
@@ -3857,7 +3856,8 @@ score_CMean
 <div id="conclusion" class="section level1">
 <h1>Conclusion</h1>
 <p>For calculating the sums and means of a series of column for each row, I recommend using the <code>rowSums()</code> and <code>rowMeans()</code> functions since they were specifically designed to do these calculations. <br></p>
-<p>For other calculations, you can use the <code>apply()</code> function with the “MARGIN = 1” argument and by specifying the appropriate function to do the calculation.</p>
+<p>For other calculations, you can use the <code>apply()</code> function with the <code>MARGIN = 1</code> argument and by specifying the appropriate function for the calculation.</p>
+<p>If the columns of interest are not in a sequential order, the <code>tidy</code> method is probably your best option. Once you become comfortable with the <code>tidy</code> syntax, you might prefer it regardless of column order.</p>
 <div id="alternative" class="section level2">
 <h2>Alternative</h2>
 <p>The R package: matrixStats exists and it provides more functions like the <code>rowSums()</code> function. <br></p>
