@@ -214,7 +214,7 @@ For calculating the sums and means of a series of column for each row, I recomme
 
 For other calculations, you can use the `apply()` function with the "MARGIN = 1" argument and by specifying the appropriate function to do the calculation.
 
-## Alternative:
+## Alternative
 The R package: matrixStats exists and it provides more functions like the `rowSums()` function. <br>
 
 Check out their website and reference manual if you are interested.
