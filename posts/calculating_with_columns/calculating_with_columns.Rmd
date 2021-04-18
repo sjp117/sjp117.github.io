@@ -229,6 +229,9 @@ mixData <- tibble(.rows = 8,
   question03 = sample(1:5, 8, replace = T),
   score03_C = sample(1:5, 8, replace = T)
 )
+
+# Making a copy of the dataframe
+mixData2 <- mixData
 ```
 
 ```{r, echo=F}
@@ -249,7 +252,9 @@ mixData$scoreSum <- mixData %>%
   select(starts_with("score") & -ends_with("_C")) %>%
   rowSums()
 # This method is fine when you are only doing one calculation
+```
 
+```{r, eval=F}
 # The next code does the same as above but you can chain more calculations
 # as demonstrated next
 mixData <- mixData %>%
@@ -270,9 +275,9 @@ kbl(mixData) %>%
 ```
 
 ## Putting it All Together
-These examples cover how to calculate row sum, median, and mean. All in one code chain.
+These example cover how to calculate row sum, median, and mean. All in one code chain.
 ```{r}
-mixData <- mixData %>%
+mixData2 <- mixData2 %>%
   mutate(scoreSum = rowSums(select(., starts_with("score") & -ends_with("_C"))),
          questionMedian = apply(select(., starts_with("question")),
                                 MARGIN = 1, median, na.rm = T),
@@ -280,7 +285,7 @@ mixData <- mixData %>%
 ```
 
 ```{r, echo=F}
-kbl(mixData) %>%
+kbl(mixData2) %>%
   kable_styling(full_width = T) %>%
   column_spec(10:12, background = "#f5ff51") %>%
   scroll_box(width = "100%", height = "100%")
