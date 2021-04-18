@@ -39,7 +39,6 @@ kbl(cars) %>%
 # Using the `rowSums()` Function
 We will use the `rowSums()` function to calculate the sum of values in a series of columns in our cars dataframe. <br>
 Specifically, we will create a new column called "sums" which will contain the sum of the last 4 columns (vs, am, gear, carb) for each row.
-
 ```{r}
 cars$sums <- rowSums(cars[8:11], na.rm = T) # "na.rm" is optional
 ```
