@@ -21,6 +21,7 @@ Some people were having trouble performing calculations with a series of columns
 1. Calculating the row sum of a series of columns.
 2. Calculating the row mean of a series of columns.
 3. Using the `apply()` function
+4. When columns are not in a sequential order
 
 For this demonstration, we will be looking at the mtcars data set (only the first 8 rows) which is already available to you.
 
@@ -31,11 +32,12 @@ cars <- head(mtcars, 8)
 ```{r, echo=F}
 kbl(cars) %>%
   kable_styling(full_width = F) %>%
-  column_spec(9:12, background = "#a8dfff")
+  column_spec(9:12, background = "#a8dfff") %>%
+  scroll_box(width = "100%", height = "100%")
 ```
 
 # Using the `rowSums()` Function
-We will use the `rowSums()` function to calculate the sum of values in a series of columns in our cars data frame. <br>
+We will use the `rowSums()` function to calculate the sum of values in a series of columns in our cars dataframe. <br>
 Specifically, we will create a new column called "sums" which will contain the sum of the last 4 columns (vs, am, gear, carb) for each row.
 
 ```{r}
@@ -46,12 +48,13 @@ cars$sums <- rowSums(cars[8:11], na.rm = T) # "na.rm" is optional
 kbl(cars) %>%
   kable_styling(full_width = F) %>%
   column_spec(13, background = "#f5ff51") %>%
-  column_spec(9:12, background = "#a8dfff")
+  column_spec(9:12, background = "#a8dfff") %>%
+  scroll_box(width = "100%", height = "100%")
 ```
 <br>
 
 ### Finding the Column Index Number
-It is vary likely that you have a data frame with many more columns and you do not know the column index number.
+It is vary likely that you have a dataframe with many more columns and you do not know the column index number.
 
 In this case, you can use the following code to find the index number of a specific column.
 
@@ -85,7 +88,8 @@ Note: It might not be vary efficient to use this method. You might save time jus
 kbl(cars) %>%
   kable_styling(full_width = F) %>%
   column_spec(13, background = "#f5ff51") %>%
-  column_spec(9:12, background = "#a8dfff")
+  column_spec(9:12, background = "#a8dfff") %>%
+  scroll_box(width = "100%", height = "100%")
 ```
 
 # Using the `rowMeans()` Function
@@ -115,7 +119,8 @@ cars$means <- rowMeans(
 kbl(cars) %>%
   kable_styling(full_width = F) %>%
   column_spec(14, background = "#f5ff51") %>%
-  column_spec(9:12, background = "#a8dfff")
+  column_spec(9:12, background = "#a8dfff") %>%
+  scroll_box(width = "100%", height = "100%")
 ```
 
 # Using the `apply()` function
@@ -183,7 +188,7 @@ kbl(cars) %>%
   kable_styling(full_width = F) %>%
   column_spec(c(15,16), background = "#f5ff51") %>%
   column_spec(9:12, background = "#a8dfff") %>%
-  remove_column(2:8)
+  scroll_box(width = "100%", height = "100%")
 ```
 
 ## Other Functions
@@ -206,7 +211,82 @@ kbl(cars) %>%
   kable_styling(full_width = F) %>%
   column_spec(17:20, background = "#f5ff51") %>%
   column_spec(9:12, background = "#a8dfff") %>%
-  remove_column(2:8)
+  scroll_box(width = "100%", height = "100%")
+```
+
+# Unordered Columns
+Sometimes the variables are not in a sequential order like our example. <br>
+Take a look at the dataframe below.
+
+```{r, echo=F}
+mixData <- tibble(.rows = 8,
+  score01 = sample(1:5, 8, replace = T),
+  question01 = sample(1:5, 8, replace = T),
+  score01_C = sample(1:5, 8, replace = T),
+  score02 = sample(1:5, 8, replace = T),
+  question02 = sample(1:5, 8, replace = T),
+  score02_C = sample(1:5, 8, replace = T),
+  score03 = sample(1:5, 8, replace = T),
+  question03 = sample(1:5, 8, replace = T),
+  score03_C = sample(1:5, 8, replace = T)
+)
+```
+
+```{r, echo=F}
+kbl(mixData) %>%
+  kable_styling(full_width = T) %>%
+  scroll_box(width = "100%", height = "100%")
+```
+The score, question, and score_C variables are separated by each other. <br>
+Using the previous methods is not advisable. <br>
+<br>
+
+## Tidy Method
+I recommend using the tidy method where we will use pipes and dplyr functions.
+
+```{r}
+# Calculating row sums of the numbered score variables
+mixData$scoreSum <- mixData %>%
+  select(starts_with("score") & -ends_with("_C")) %>%
+  rowSums()
+# This method is fine when you are only doing one calculation
+
+# The next code does the same as above but you can chain more calculations
+# as demonstrated next
+mixData <- mixData %>%
+  mutate(scoreSum = rowSums(select(., starts_with("score") & -ends_with("_C"))))
+                                  # This period references the mixData dataframe
+                                  # that is being piped
+```
+
+Note: We specified with `-ends_with("_C")` so that we do not include the numbered score_C columns.
+
+Check the `?select` documentation and its associated helper functions like `starts_with()`, `contains()`, `num_range()`, & etc...
+
+```{r, echo=F}
+kbl(mixData) %>%
+  kable_styling(full_width = T) %>%
+  column_spec(10, background = "#f5ff51") %>%
+  scroll_box(width = "100%", height = "100%")
+```
+
+## Putting it All Together
+These examples cover how to calculate row sum, median, and mean. All in one code chain.
+```{r}
+mixData <- mixData %>%
+  mutate(scoreSum = rowSums(select(., starts_with("score") & -ends_with("_C"))),
+         questionMedian = apply(select(., starts_with("question")),
+                                MARGIN = 1, median, na.rm = T),
+         score_CMean = rowMeans(select(., starts_with("score") & ends_with("_C"))))
+```
+
+Note: The first 6 columns were omitted for ease of viewing.
+
+```{r, echo=F}
+kbl(mixData) %>%
+  kable_styling(full_width = T) %>%
+  column_spec(10:12, background = "#f5ff51") %>%
+  scroll_box(width = "100%", height = "100%")
 ```
 
 # Conclusion
@@ -222,6 +302,3 @@ Check out their website and reference manual if you are interested.
 Webpage: https://github.com/HenrikBengtsson/matrixStats
 <br>
 Reference: https://cran.r-project.org/web/packages/matrixStats/matrixStats.pdf
-
-
-

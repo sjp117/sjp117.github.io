@@ -262,45 +262,47 @@ div.tocify {
 <li>Calculating the row sum of a series of columns.</li>
 <li>Calculating the row mean of a series of columns.</li>
 <li>Using the <code>apply()</code> function</li>
+<li>When columns are not in a sequential order</li>
 </ol>
 <p>For this demonstration, we will be looking at the mtcars data set (only the first 8 rows) which is already available to you.</p>
 <pre class="r"><code>cars &lt;- head(mtcars, 8)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 mpg
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 cyl
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 disp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 hp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 drat
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 wt
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 qsec
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
 </tr>
@@ -613,49 +615,51 @@ Merc 240D
 </tbody>
 </table>
 </div>
+</div>
 <div id="using-the-rowsums-function" class="section level1">
 <h1>Using the <code>rowSums()</code> Function</h1>
-<p>We will use the <code>rowSums()</code> function to calculate the sum of values in a series of columns in our cars data frame. <br> Specifically, we will create a new column called “sums” which will contain the sum of the last 4 columns (vs, am, gear, carb) for each row.</p>
+<p>We will use the <code>rowSums()</code> function to calculate the sum of values in a series of columns in our cars dataframe. <br> Specifically, we will create a new column called “sums” which will contain the sum of the last 4 columns (vs, am, gear, carb) for each row.</p>
 <pre class="r"><code>cars$sums &lt;- rowSums(cars[8:11], na.rm = T) # &quot;na.rm&quot; is optional</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 mpg
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 cyl
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 disp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 hp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 drat
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 wt
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 qsec
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums
 </th>
 </tr>
@@ -991,10 +995,11 @@ Merc 240D
 </tr>
 </tbody>
 </table>
+</div>
 <p><br></p>
 <div id="finding-the-column-index-number" class="section level3">
 <h3>Finding the Column Index Number</h3>
-<p>It is vary likely that you have a data frame with many more columns and you do not know the column index number.</p>
+<p>It is vary likely that you have a dataframe with many more columns and you do not know the column index number.</p>
 <p>In this case, you can use the following code to find the index number of a specific column.</p>
 <pre class="r"><code>which(colnames(cars) == &quot;vs&quot;)</code></pre>
 <pre><code>## [1] 8</code></pre>
@@ -1012,45 +1017,46 @@ cars$sums &lt;- rowSums(
   cars[which(colnames(cars) == &quot;vs&quot;):which(colnames(cars) == &quot;carb&quot;)]
 )</code></pre>
 <p>Note: It might not be vary efficient to use this method. You might save time just running the <code>which(colnames(cars) == &quot;vs&quot;)</code> code and keeping the numbers in mind instead of making new variables for them.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 mpg
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 cyl
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 disp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 hp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 drat
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 wt
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 qsec
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums
 </th>
 </tr>
@@ -1386,6 +1392,7 @@ Merc 240D
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <div id="using-the-rowmeans-function" class="section level1">
@@ -1407,48 +1414,49 @@ cars$means &lt;- rowMeans(cars[start:end])
 cars$means &lt;- rowMeans(
   cars[which(colnames(cars) == &quot;vs&quot;):which(colnames(cars) == &quot;carb&quot;)]
 )</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 mpg
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 cyl
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 disp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 hp
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 drat
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 wt
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 qsec
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 means
 </th>
 </tr>
@@ -1808,6 +1816,7 @@ Merc 240D
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div id="using-the-apply-function" class="section level1">
 <h1>Using the <code>apply()</code> function</h1>
@@ -1859,33 +1868,55 @@ cars$means2 &lt;- apply(cars[start:end], MARGIN = 1, mean, na.rm = T)
 cars$means2 &lt;- apply(
   cars[which(colnames(cars) == &quot;vs&quot;):which(colnames(cars) == &quot;carb&quot;)],
   MARGIN = 1, mean, na.rm = T)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mpg
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+cyl
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+disp
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+hp
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+drat
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+wt
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+qsec
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 means
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums2
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 means2
 </th>
 </tr>
@@ -1894,6 +1925,27 @@ means2
 <tr>
 <td style="text-align:left;">
 Mazda RX4
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+<td style="text-align:right;">
+2.620
+</td>
+<td style="text-align:right;">
+16.46
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -1924,6 +1976,27 @@ Mazda RX4
 <td style="text-align:left;">
 Mazda RX4 Wag
 </td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+<td style="text-align:right;">
+2.875
+</td>
+<td style="text-align:right;">
+17.02
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
 </td>
@@ -1952,6 +2025,27 @@ Mazda RX4 Wag
 <tr>
 <td style="text-align:left;">
 Datsun 710
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+108.0
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+3.85
+</td>
+<td style="text-align:right;">
+2.320
+</td>
+<td style="text-align:right;">
+18.61
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
@@ -1982,6 +2076,27 @@ Datsun 710
 <td style="text-align:left;">
 Hornet 4 Drive
 </td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+258.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.08
+</td>
+<td style="text-align:right;">
+3.215
+</td>
+<td style="text-align:right;">
+19.44
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
 </td>
@@ -2010,6 +2125,27 @@ Hornet 4 Drive
 <tr>
 <td style="text-align:left;">
 Hornet Sportabout
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360.0
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+<td style="text-align:right;">
+3.440
+</td>
+<td style="text-align:right;">
+17.02
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -2040,6 +2176,27 @@ Hornet Sportabout
 <td style="text-align:left;">
 Valiant
 </td>
+<td style="text-align:right;">
+18.1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+225.0
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+2.76
+</td>
+<td style="text-align:right;">
+3.460
+</td>
+<td style="text-align:right;">
+20.22
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
 </td>
@@ -2068,6 +2225,27 @@ Valiant
 <tr>
 <td style="text-align:left;">
 Duster 360
+</td>
+<td style="text-align:right;">
+14.3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360.0
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+3.21
+</td>
+<td style="text-align:right;">
+3.570
+</td>
+<td style="text-align:right;">
+15.84
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -2098,6 +2276,27 @@ Duster 360
 <td style="text-align:left;">
 Merc 240D
 </td>
+<td style="text-align:right;">
+24.4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+146.7
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+3.69
+</td>
+<td style="text-align:right;">
+3.190
+</td>
+<td style="text-align:right;">
+20.00
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
 </td>
@@ -2126,6 +2325,7 @@ Merc 240D
 </tbody>
 </table>
 </div>
+</div>
 <div id="other-functions" class="section level2">
 <h2>Other Functions</h2>
 <pre class="r"><code># median
@@ -2139,45 +2339,67 @@ cars$max &lt;- apply(cars[8:11], MARGIN = 1, max, na.rm = T)
 
 # minimum value
 cars$min &lt;- apply(cars[8:11], MARGIN = 1, min, na.rm = T)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+mpg
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+cyl
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+disp
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+hp
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+drat
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+wt
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+qsec
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 vs
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 am
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 gear
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 carb
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 means
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sums2
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 means2
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 median
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 sd
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 max
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 min
 </th>
 </tr>
@@ -2186,6 +2408,27 @@ min
 <tr>
 <td style="text-align:left;">
 Mazda RX4
+</td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+<td style="text-align:right;">
+2.620
+</td>
+<td style="text-align:right;">
+16.46
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -2228,6 +2471,27 @@ Mazda RX4
 <td style="text-align:left;">
 Mazda RX4 Wag
 </td>
+<td style="text-align:right;">
+21.0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+160.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+<td style="text-align:right;">
+2.875
+</td>
+<td style="text-align:right;">
+17.02
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
 </td>
@@ -2268,6 +2532,27 @@ Mazda RX4 Wag
 <tr>
 <td style="text-align:left;">
 Datsun 710
+</td>
+<td style="text-align:right;">
+22.8
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+108.0
+</td>
+<td style="text-align:right;">
+93
+</td>
+<td style="text-align:right;">
+3.85
+</td>
+<td style="text-align:right;">
+2.320
+</td>
+<td style="text-align:right;">
+18.61
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
@@ -2310,6 +2595,27 @@ Datsun 710
 <td style="text-align:left;">
 Hornet 4 Drive
 </td>
+<td style="text-align:right;">
+21.4
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+258.0
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+3.08
+</td>
+<td style="text-align:right;">
+3.215
+</td>
+<td style="text-align:right;">
+19.44
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
 </td>
@@ -2350,6 +2656,27 @@ Hornet 4 Drive
 <tr>
 <td style="text-align:left;">
 Hornet Sportabout
+</td>
+<td style="text-align:right;">
+18.7
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360.0
+</td>
+<td style="text-align:right;">
+175
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+<td style="text-align:right;">
+3.440
+</td>
+<td style="text-align:right;">
+17.02
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -2392,6 +2719,27 @@ Hornet Sportabout
 <td style="text-align:left;">
 Valiant
 </td>
+<td style="text-align:right;">
+18.1
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+225.0
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+2.76
+</td>
+<td style="text-align:right;">
+3.460
+</td>
+<td style="text-align:right;">
+20.22
+</td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
 </td>
@@ -2432,6 +2780,27 @@ Valiant
 <tr>
 <td style="text-align:left;">
 Duster 360
+</td>
+<td style="text-align:right;">
+14.3
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+360.0
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+3.21
+</td>
+<td style="text-align:right;">
+3.570
+</td>
+<td style="text-align:right;">
+15.84
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 0
@@ -2473,6 +2842,27 @@ Duster 360
 <tr>
 <td style="text-align:left;">
 Merc 240D
+</td>
+<td style="text-align:right;">
+24.4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+146.7
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+3.69
+</td>
+<td style="text-align:right;">
+3.190
+</td>
+<td style="text-align:right;">
+20.00
 </td>
 <td style="text-align:right;background-color: #a8dfff !important;">
 1
@@ -2513,6 +2903,955 @@ Merc 240D
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+</div>
+<div id="unordered-columns" class="section level1">
+<h1>Unordered Columns</h1>
+<p>Sometimes the variables are not in a sequential order like our example. <br> Take a look at the dataframe below.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03_C
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The score, question, and score_C variables are separated by each other. <br> Using the previous methods is not advisable. <br> <br></p>
+<div id="tidy-method" class="section level2">
+<h2>Tidy Method</h2>
+<p>I recommend using the tidy method where we will use pipes and dplyr functions.</p>
+<pre class="r"><code># Calculating row sums of the numbered score variables
+mixData$scoreSum &lt;- mixData %&gt;%
+  select(starts_with(&quot;score&quot;) &amp; -ends_with(&quot;_C&quot;)) %&gt;%
+  rowSums()
+# This method is fine when you are only doing one calculation
+
+# The next code does the same as above but you can chain more calculations
+# as demonstrated next
+mixData &lt;- mixData %&gt;%
+  mutate(scoreSum = rowSums(select(., starts_with(&quot;score&quot;) &amp; -ends_with(&quot;_C&quot;))))
+                                  # This period references the mixData dataframe
+                                  # that is being piped</code></pre>
+<p>Note: We specified with <code>-ends_with(&quot;_C&quot;)</code> so that we do not include the numbered score_C columns.</p>
+<p>Check the <code>?select</code> documentation and its associated helper functions like <code>starts_with()</code>, <code>contains()</code>, <code>num_range()</code>, &amp; etc…</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+scoreSum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+18
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+26
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="putting-it-all-together" class="section level2">
+<h2>Putting it All Together</h2>
+<p>These examples cover how to calculate row sum, median, and mean. All in one code chain.</p>
+<pre class="r"><code>mixData &lt;- mixData %&gt;%
+  mutate(scoreSum = rowSums(select(., starts_with(&quot;score&quot;) &amp; -ends_with(&quot;_C&quot;))),
+         questionMedian = apply(select(., starts_with(&quot;question&quot;)),
+                                MARGIN = 1, median, na.rm = T),
+         score_CMean = rowMeans(select(., starts_with(&quot;score&quot;) &amp; ends_with(&quot;_C&quot;))))</code></pre>
+<p>Note: The first 6 columns were omitted for ease of viewing.</p>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:100%; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question01
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score01_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question02
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score02_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+question03
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score03_C
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+scoreSum
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+questionMedian
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+score_CMean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+18
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+5
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+30
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.666667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+12
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2.333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+27
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+21
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+30
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3.333333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+39
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+4
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+4.000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+39
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+3
+</td>
+<td style="text-align:right;background-color: #f5ff51 !important;">
+2.666667
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div id="conclusion" class="section level1">
