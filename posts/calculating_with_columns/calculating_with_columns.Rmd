@@ -4,7 +4,7 @@ output:
   html_document:
     theme: united
     toc: true
-    toc_depth: 3
+    toc_depth: 2
     toc_float:
       collapsed: false
 ---
@@ -52,7 +52,7 @@ kbl(cars) %>%
 ```
 <br>
 
-### Finding the Column Index Number
+## Finding the Column Index Number
 It is vary likely that you have a dataframe with many more columns and you do not know the column index number.
 
 In this case, you can use the following code to find the index number of a specific column.
@@ -214,7 +214,7 @@ kbl(cars) %>%
 ```
 
 # Non-sequential Columns
-Sometimes the variables are not in a sequential order like our example. <br>
+Sometimes the variables of interest are not in a sequential order. <br>
 Take a look at the dataframe below.
 
 ```{r, echo=F}
