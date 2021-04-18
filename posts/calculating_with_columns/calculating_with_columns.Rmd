@@ -1,0 +1,227 @@
+---
+title: "Calculating with Columns for Each Row"
+output: 
+  html_document:
+    theme: united
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+---
+
+```{r, echo=F, message=F}
+library(dplyr)
+library(kableExtra)
+```
+
+# Overview
+Some people were having trouble performing calculations with a series of columns for each row. This document will demonstrate how this can be done.
+
+# Outline
+1. Calculating the row sum of a series of columns.
+2. Calculating the row mean of a series of columns.
+3. Using the `apply()` function
+
+For this demonstration, we will be looking at the mtcars data set (only the first 8 rows) which is already available to you.
+
+```{r}
+cars <- head(mtcars, 8)
+```
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(9:12, background = "#a8dfff")
+```
+
+# Using the `rowSums()` Function
+We will use the `rowSums()` function to calculate the sum of values in a series of columns in our cars data frame. <br>
+Specifically, we will create a new column called "sums" which will contain the sum of the last 4 columns (vs, am, gear, carb) for each row.
+
+```{r}
+cars$sums <- rowSums(cars[8:11], na.rm = T) # "na.rm" is optional
+```
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(13, background = "#f5ff51") %>%
+  column_spec(9:12, background = "#a8dfff")
+```
+<br>
+
+### Finding the Column Index Number
+It is vary likely that you have a data frame with many more columns and you do not know the column index number.
+
+In this case, you can use the following code to find the index number of a specific column.
+
+```{r}
+which(colnames(cars) == "vs")
+```
+<br>
+With these codes, you could construct do something like the following. <br>
+We are merely assigning the column numbers to variables that we name "start" and "end". <br>
+This will produce an equivalent result as the previous code. <br>
+However, we do not need to know the index number of the columns we want to sum up.
+
+```{r}
+# The following codes do the same thing.
+
+# option 1:
+start <- which(colnames(cars) == "vs")
+end <- which(colnames(cars) == "carb")
+
+cars$sums <- rowSums(cars[start:end])
+
+# option 2:
+cars$sums <- rowSums(
+  cars[which(colnames(cars) == "vs"):which(colnames(cars) == "carb")]
+)
+```
+Note: It might not be vary efficient to use this method. You might save time just running the `which(colnames(cars) == "vs")` code and keeping the numbers in mind instead of making new variables for them.
+
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(13, background = "#f5ff51") %>%
+  column_spec(9:12, background = "#a8dfff")
+```
+
+# Using the `rowMeans()` Function
+The procedure for calculating the means of a series of column values is almost identical with the previous section. <br> <br>
+
+We will create a new column named "means", and it will contain the mean of the same columns as before.
+
+```{r}
+# The following codes do the same thing.
+
+# option 1:
+cars$means <- rowMeans(cars[8:11], na.rm = T)
+
+# option 2:
+start <- which(colnames(cars) == "vs")
+end <- which(colnames(cars) == "carb")
+
+cars$means <- rowMeans(cars[start:end])
+
+# option 3:
+cars$means <- rowMeans(
+  cars[which(colnames(cars) == "vs"):which(colnames(cars) == "carb")]
+)
+```
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(14, background = "#f5ff51") %>%
+  column_spec(9:12, background = "#a8dfff")
+```
+
+# Using the `apply()` function
+In the previous sections, I introduced you to the `rowSums()` and the `rowMeans()` functions.
+However, these functions are only limited to finding the sums and means respectively.
+<br> <br>
+
+There will be times when you want to perform a similar calculations with a different function (e.g., median, standard deviation, maximum/minimum values, etc...)
+<br> <br>
+
+To do this we will use the `apply()` function. We will first replicate the previous sections and move of to other functions.
+
+## Sum
+```{r}
+# The following codes do the same thing.
+
+# option 1:
+# template: apply(data, MARGIN = 1 for row / 2 for col, function, 
+#                 optional arguments of the function being used ("sum", in this case))
+cars$sums2 <- apply(cars[8:11], MARGIN = 1, sum, na.rm = T)
+                                        # note that the parentheses are absent
+                                        # after the "sum" function
+# MARGIN = 1 indicates that the sum function will be run on each row
+
+# option 2:
+start <- which(colnames(cars) == "vs")
+end <- which(colnames(cars) == "carb")
+
+cars$sums2 <- apply(cars[start:end], MARGIN = 1, sum, na.rm = T)
+
+# option 3:
+cars$sums2 <- apply(
+  cars[which(colnames(cars) == "vs"):which(colnames(cars) == "carb")],
+  MARGIN = 1, sum, na.rm = T)
+
+```
+
+## Mean
+```{r}
+# The following codes do the same thing.
+
+# option 1:
+# template: apply(data, MARGIN = 1 for row / 2 for col, function,
+#                 optional arguments of the function being used (mean, in this case))
+cars$means2 <- apply(cars[8:11], MARGIN = 1, mean, na.rm = T)
+                                        # note that the parentheses are absent
+                                        # after the "mean" function
+# MARGIN = 1 indicates that the sum function will be run on each row
+
+# option 2:
+start <- which(colnames(cars) == "vs")
+end <- which(colnames(cars) == "carb")
+
+cars$means2 <- apply(cars[start:end], MARGIN = 1, mean, na.rm = T)
+
+# option 3:
+cars$means2 <- apply(
+  cars[which(colnames(cars) == "vs"):which(colnames(cars) == "carb")],
+  MARGIN = 1, mean, na.rm = T)
+
+```
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(c(15,16), background = "#f5ff51") %>%
+  column_spec(9:12, background = "#a8dfff") %>%
+  remove_column(2:8)
+```
+
+## Other Functions
+```{r}
+# median
+cars$median <- apply(cars[8:11], MARGIN = 1, median, na.rm = T)
+
+# standard deviation
+cars$sd <- apply(cars[8:11], MARGIN = 1, sd, na.rm = T)
+
+# maximum value
+cars$max <- apply(cars[8:11], MARGIN = 1, max, na.rm = T)
+
+# minimum value
+cars$min <- apply(cars[8:11], MARGIN = 1, min, na.rm = T)
+```
+
+```{r, echo=F}
+kbl(cars) %>%
+  kable_styling(full_width = F) %>%
+  column_spec(17:20, background = "#f5ff51") %>%
+  column_spec(9:12, background = "#a8dfff") %>%
+  remove_column(2:8)
+```
+
+# Conclusion
+For calculating the sums and means of a series of column for each row, I recommend using the `rowSums()` and `rowMeans()` functions since they were specifically designed to do these calculations. <br> 
+
+For other calculations, you can use the `apply()` function with the "MARGIN = 1" argument and by specifying the appropriate function to do the calculation.
+
+## Optional alternatives:
+The R package: matrixStats exists and it provides more functions like the `rowSums()` function. <br>
+
+Check out their website and reference manual if you are interested.
+<br>
+Webpage: https://github.com/HenrikBengtsson/matrixStats
+<br>
+Reference: https://cran.r-project.org/web/packages/matrixStats/matrixStats.pdf
+
+
+
