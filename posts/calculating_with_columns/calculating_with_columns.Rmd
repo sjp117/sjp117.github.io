@@ -1,15 +1,15 @@
 ---
 title: "Calculating with Columns for Each Row"
 output:
-  word_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     theme: united
     toc: yes
     toc_depth: 2
     toc_float:
       collapsed: no
+  word_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ```{r, echo=F, message=F}
@@ -220,8 +220,10 @@ kbl(cars) %>%
 Sometimes the variables of interest are not in a sequential order. <br>
 Take a look at the dataframe below.
 
-```{r, echo=F}
-mixData <- tibble(.rows = 8,
+```{r}
+set.seed(123) # makes sure we produce the same random numbers
+
+mixData <- data.frame(
   score01 = sample(1:5, 8, replace = T),
   question01 = sample(1:5, 8, replace = T),
   score01_C = sample(1:5, 8, replace = T),
@@ -243,11 +245,17 @@ kbl(mixData) %>%
   scroll_box(width = "100%", height = "100%")
 ```
 The score, question, and score_C variables are separated by each other. <br>
-Using the previous methods is not advisable. <br>
+Using the previous methods are difficult. <br>
 <br>
 
 ## The `tidy` Method
 I recommend using the tidy method where we will use pipes and dplyr functions.
+
+```{r, message=F}
+# Import the tidyverse package
+library(tidyverse)
+```
+
 
 ```{r}
 # Calculating row sums of the numbered score variables
@@ -301,7 +309,7 @@ For other calculations, you can use the `apply()` function with the `MARGIN = 1`
 
 If the columns of interest are not in a sequential order, the `tidy` method is probably your best option. Once you become comfortable with the `tidy` syntax, you might prefer it regardless of column order.
 
-## Alternative
+## Bonus
 The R package: matrixStats exists and it provides more functions like the `rowSums()` function. <br>
 
 Check out their website and reference manual if you are interested.
