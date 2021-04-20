@@ -30,6 +30,8 @@ We will use these data for our examples:
 ```{r}
 carsdata <- mtcars
 
+set.seed(123) # this function with the specific number "123" will make sure
+              # we generate the same random numbers
 scoredata <- data.frame(
   gender = rep(c("Male", "Female"), times = 1, each = 1),
   score = round(rnorm(120, 70, 5)),

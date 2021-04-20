@@ -266,6 +266,8 @@ div.tocify {
 <p>We will use these data for our examples:</p>
 <pre class="r"><code>carsdata &lt;- mtcars
 
+set.seed(123) # this function with the specific number &quot;123&quot; will make sure
+              # we generate the same random numbers
 scoredata &lt;- data.frame(
   gender = rep(c(&quot;Male&quot;, &quot;Female&quot;), times = 1, each = 1),
   score = round(rnorm(120, 70, 5)),
@@ -283,11 +285,11 @@ scoredata &lt;- data.frame(
 <p>For the score dataset, we will calculate the mean score for each gender variable.</p>
 <pre class="r"><code>head(scoredata)</code></pre>
 <pre><code>##   gender score school
-## 1   Male    69      1
-## 2 Female    70      2
-## 3   Male    67      2
-## 4 Female    65      1
-## 5   Male    64      1
+## 1   Male    67      1
+## 2 Female    69      2
+## 3   Male    78      2
+## 4 Female    70      1
+## 5   Male    71      1
 ## 6 Female    79      2</code></pre>
 </div>
 <div id="using-aggregate" class="section level1">
@@ -307,20 +309,20 @@ aggregate(mpg ~ vs, carsdata, mean)</code></pre>
 # aggregate(what you want to calculate with ~ what you want to subset by, dataset, function)
 aggregate(score ~ gender, scoredata, mean)</code></pre>
 <pre><code>##   gender    score
-## 1 Female 69.50000
-## 2   Male 69.91667</code></pre>
+## 1 Female 70.21667
+## 2   Male 70.03333</code></pre>
 <p>Keep in mind, the <code>aggregate()</code> function does not only calculate means. You can calculate other things like median, and standard deviations by specifying it in the function arguments. (i.e., replace mean with median)</p>
 <p>Note: The aggregate function generates a dataframe. You can assign a name to that dataframe and call it like your other dataframes</p>
 <pre class="r"><code># specifying what data you want from the dataframe created by the aggregate function
 aggregate(score ~ gender, scoredata, mean)$score[1] # notice the $score[1] usage</code></pre>
-<pre><code>## [1] 69.5</code></pre>
+<pre><code>## [1] 70.21667</code></pre>
 <pre class="r"><code>meanScores &lt;- aggregate(score ~ gender, scoredata, mean)
 meanScores</code></pre>
 <pre><code>##   gender    score
-## 1 Female 69.50000
-## 2   Male 69.91667</code></pre>
+## 1 Female 70.21667
+## 2   Male 70.03333</code></pre>
 <pre class="r"><code>meanScores$score[1]</code></pre>
-<pre><code>## [1] 69.5</code></pre>
+<pre><code>## [1] 70.21667</code></pre>
 </div>
 <div id="subset-by-2-group-levels" class="section level2">
 <h2>Subset by 2 Group levels</h2>
@@ -336,10 +338,10 @@ meanScores</code></pre>
 <p>Using the scores dataset, we will calculate the mean score for each gender levels and school levels.</p>
 <pre class="r"><code>aggregate(score ~ gender*school, scoredata, mean)</code></pre>
 <pre><code>##   gender school    score
-## 1 Female      1 68.96667
-## 2   Male      1 70.66667
-## 3 Female      2 70.03333
-## 4   Male      2 69.16667</code></pre>
+## 1 Female      1 69.83333
+## 2   Male      1 69.60000
+## 3 Female      2 70.60000
+## 4   Male      2 70.46667</code></pre>
 </div>
 </div>
 <div id="using-tidy-method" class="section level1">
@@ -355,8 +357,8 @@ meanScores</code></pre>
 <pre><code>## # A tibble: 2 x 4
 ##   gender meanScore medianScore sdScore
 ##   &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Female      69.5        69.5    5.53
-## 2 Male        69.9        70      3.89</code></pre>
+## 1 Female      70.2        70      4.90
+## 2 Male        70.0        69.5    4.07</code></pre>
 <pre class="r"><code>carsdata %&gt;%
   group_by(vs) %&gt;%
   summarise(meanMPG = mean(mpg),
@@ -376,7 +378,7 @@ meanScores</code></pre>
 
 # Calling the mean score value for males
 SummScore1$meanScore[SummScore1$gender == &quot;Male&quot;]</code></pre>
-<pre><code>## [1] 69.91667</code></pre>
+<pre><code>## [1] 70.03333</code></pre>
 </div>
 <div id="subset-by-two-group-levels" class="section level2">
 <h2>Subset by Two Group levels</h2>
@@ -393,10 +395,10 @@ SummScore1$meanScore[SummScore1$gender == &quot;Male&quot;]</code></pre>
 ## # Groups:   gender [2]
 ##   gender school meanScore medianScore sdScore
 ##   &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Female      1      69.0        69      5.67
-## 2 Female      2      70.0        70.5    5.42
-## 3 Male        1      70.7        71.5    4.45
-## 4 Male        2      69.2        69      3.14</code></pre>
+## 1 Female      1      69.8        70      4.92
+## 2 Female      2      70.6        70      4.93
+## 3 Male        1      69.6        69.5    4.39
+## 4 Male        2      70.5        70      3.75</code></pre>
 <pre class="r"><code>carsdata %&gt;%
   group_by(vs, gear) %&gt;%
   summarise(meanMPG = mean(mpg),
@@ -422,7 +424,7 @@ SummScore1$meanScore[SummScore1$gender == &quot;Male&quot;]</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;gender&#39;. You can override using the `.groups` argument.</code></pre>
 <pre class="r"><code># Calling the mean score value for females in school 2
 SummScore2$meanScore[SummScore2$gender == &quot;Female&quot; &amp; SummScore2$school == 2]</code></pre>
-<pre><code>## [1] 70.03333</code></pre>
+<pre><code>## [1] 70.6</code></pre>
 </div>
 </div>
 
