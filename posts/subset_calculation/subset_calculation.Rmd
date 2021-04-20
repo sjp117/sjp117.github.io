@@ -12,11 +12,6 @@ output:
     toc_depth: '2'
 ---
 
-```{r, echo=F, message=F}
-library(tidyverse)
-library(kableExtra)
-```
-
 # Overview
 This document will demonstrate how to perform calculations with subsets of data. <br>
 For example, calculating the means for both male and female samples.
@@ -88,6 +83,12 @@ aggregate(score ~ gender*school, scoredata, mean)
 ```
 
 # Using Tidy Method
+
+```{r, message=F}
+# import the tidyverse Package
+library(tidyverse)
+```
+
 ## Subset by One Group levels
 Using the Tidyverse package is good option if you are familiar with the Tidy syntax. <br>
 The `aggregat()` function can feel limited because it can only run one function (i.e., mean or median). <br>
