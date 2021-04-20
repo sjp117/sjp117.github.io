@@ -1,12 +1,15 @@
 ---
 title: "Calculating with Columns for Each Row"
-output: 
+output:
+  word_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
     theme: united
-    toc: true
+    toc: yes
     toc_depth: 2
     toc_float:
-      collapsed: false
+      collapsed: no
 ---
 
 ```{r, echo=F, message=F}

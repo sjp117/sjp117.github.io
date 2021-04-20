@@ -1,0 +1,148 @@
+---
+title: "Subset Calculations"
+output:
+  html_document:
+    theme: united
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+  word_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+```{r, echo=F, message=F}
+library(tidyverse)
+library(kableExtra)
+```
+
+# Overview
+This document will demonstrate how to perform calculations with subsets of data. <br>
+For example, calculating the means for both male and female samples.
+
+# Outline
+1. Using the `aggregate()` function to compute means in subsets of one or two group levels.
+2. Using the Tidy syntax to compute means in subsets of one or two group levels.
+
+# Dataset
+We will use these data for our examples:
+```{r}
+carsdata <- mtcars
+
+scoredata <- data.frame(
+  gender = rep(c("Male", "Female"), times = 1, each = 1),
+  score = round(rnorm(120, 70, 5)),
+  school = rep(c(1,2,2,1), times = 1, each = 1)
+)
+```
+For the cars dataset, we will calculate the mean "mpg" by the "carb" (number of carburetors) group levels.
+```{r}
+head(carsdata)
+```
+For the score dataset, we will calculate the mean score for each gender variable.
+```{r}
+head(scoredata)
+```
+
+# Using `aggregate()`
+## Subset by One Group levels
+The `aggregate()` function is simple function that lets you use a single function for a variable by the group level of other categorical variables.
+```{r}
+# template:
+# aggregate(what you want to calculate with ~ what you want to subset by, dataset, function)
+aggregate(mpg ~ vs, carsdata, mean)
+```
+In this case, we calculated the mean MPG by the levels of the carb variable.
+
+Next, is the same function used to calculate the mean score for each gender in the scores dataset.
+```{r}
+# template:
+# aggregate(what you want to calculate with ~ what you want to subset by, dataset, function)
+aggregate(score ~ gender, scoredata, mean)
+```
+Keep in mind, the `aggregate()` function does not only calculate means. You can calculate other things like median, and standard deviations by specifying it in the function arguments. (i.e., replace mean with median)
+
+Note: The aggregate function generates a dataframe. You can assign a name to that dataframe and call it like your other dataframes
+
+```{r}
+# specifying what data you want from the dataframe created by the aggregate function
+aggregate(score ~ gender, scoredata, mean)$score[1] # notice the $score[1] usage
+meanScores <- aggregate(score ~ gender, scoredata, mean)
+meanScores
+meanScores$score[1]
+```
+
+## Subset by 2 Group levels
+You can subset using two group variables. <br>
+Using the cars data, we will calculate the mean MPG by each "carb" levels and each "vs" levels.
+```{r}
+aggregate(mpg ~ vs*gear, carsdata, mean)
+```
+
+Using the scores dataset, we will calculate the mean score for each gender levels and school levels.
+```{r}
+aggregate(score ~ gender*school, scoredata, mean)
+```
+
+# Using Tidy Method
+## Subset by One Group levels
+Using the Tidyverse package is good option if you are familiar with the Tidy syntax. <br>
+The `aggregat()` function can feel limited because it can only run one function (i.e., mean or median). <br>
+However, using the tidy codes, you can write one chain of code to calculate aggregates of various kinds.
+```{r}
+scoredata %>%           # score data frame at the start of the pipe
+  group_by(gender) %>%  # specify which variable to subset (group) by
+  summarise(meanScore = mean(score),     # specify column names and what you want
+            medianScore = median(score), # those columns to contain
+            sdScore = sd(score))         # i.e., mean, median, sd...
+```
+```{r}
+carsdata %>%
+  group_by(vs) %>%
+  summarise(meanMPG = mean(mpg),
+            medianMPB = median(mpg),
+            sdMPG = sd(mpg))
+```
+Like with the `aggregate()` function, these codes generate a dataframe that you can assign a name to, and you can interact with them like any other dataframe.
+```{r}
+SummScore1 <- scoredata %>% 
+  group_by(gender) %>% 
+  summarise(meanScore = mean(score),
+            medianScore = median(score),
+            sdScore = sd(score))
+
+# Calling the mean score value for males
+SummScore1$meanScore[SummScore1$gender == "Male"]
+```
+
+## Subset by Two Group levels
+Simply, add more group variables inside the `group_by()` function when you want to subset with more group levels.
+```{r}
+scoredata %>%
+  group_by(gender, school) %>%  # When you want to subset by more than one 
+                                # group levels, just add those group variables
+                                # inside the group_by function
+  summarise(meanScore = mean(score), 
+            medianScore = median(score),
+            sdScore = sd(score))
+```
+
+```{r}
+carsdata %>%
+  group_by(vs, gear) %>%
+  summarise(meanMPG = mean(mpg),
+            medianMPB = median(mpg),
+            sdMPG = sd(mpg))
+```
+Again, these codes generate a dataframe that you can assign a name to, and you can interact with them like any other dataframe.
+```{r}
+SummScore2 <- scoredata %>% # Assigning a name to the summary dataframe
+  group_by(gender, school) %>%
+  summarise(meanScore = mean(score), 
+            medianScore = median(score),
+            sdScore = sd(score))
+
+# Calling the mean score value for females in school 2
+SummScore2$meanScore[SummScore2$gender == "Female" & SummScore2$school == 2]
+```
